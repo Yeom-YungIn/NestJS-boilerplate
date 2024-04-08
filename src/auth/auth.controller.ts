@@ -1,7 +1,8 @@
-import {Body, Controller, Post, Res, ValidationPipe} from '@nestjs/common';
+import {Body, Controller, Post, ValidationPipe} from '@nestjs/common';
 import {AuthService} from "./auth.service";
 import {AuthCredentialDto} from "./dto/auth-credential.dto";
 import {User} from "./entity/user.entity";
+import {LoginResponseType} from "./types/login-response.type";
 
 @Controller('auth')
 export class AuthController {
@@ -14,10 +15,7 @@ export class AuthController {
     }
 
     @Post('/login')
-    async logIn(@Body() authCredentialDto: AuthCredentialDto, @Res() res) {
-        const accessToken = await this.authService.generateAccessToken(authCredentialDto);
-        const refreshToken = this.authService.generateRefreshToken(authCredentialDto);
-        res.cookie('refreshToken', refreshToken, { httpOnly: true });
-        res.json(accessToken)
+    logIn(@Body() authCredentialDto: AuthCredentialDto): Promise<LoginResponseType> {
+        return this.authService.login(authCredentialDto);
     }
 }

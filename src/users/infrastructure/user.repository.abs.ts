@@ -3,9 +3,9 @@ import {NullableType} from "../../utils/types/nullable.type";
 import {EntityConditionType} from "../../utils/types/entity-condition.type";
 import {FilterUserDto, SortUserDto} from "../dto/query-user.dto";
 import {IPaginationOptions} from "../../utils/types/pagenation-options";
-import {DeepPartial} from "typeorm";
+import {DeepPartialType} from "../../utils/types/deep-partial.type";
 
-export abstract class UserRepository {
+export abstract class UserRepositoryAbs {
     abstract create(
         data: Omit<User, 'id' | 'createdAt' | 'deletedAt' | 'updatedAt'>,
     ): Promise<User>;
@@ -18,7 +18,7 @@ export abstract class UserRepository {
 
     abstract update(
         id: User['id'],
-        payload: DeepPartial<User | null>
+        payload: DeepPartialType<User | null>
     );
 
     abstract softDelete(id: User['id']): Promise<void>;

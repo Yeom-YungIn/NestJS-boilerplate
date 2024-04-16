@@ -1,7 +1,7 @@
 import {User} from "../domain/user";
 
 export class FilterUserDto {
-    role?: number | null;
+    roles?: number | null;
 }
 
 export class SortUserDto {
